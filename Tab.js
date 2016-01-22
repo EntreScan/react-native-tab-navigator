@@ -17,7 +17,10 @@ export default class Tab extends React.Component {
     badge: PropTypes.element,
     onPress: PropTypes.func,
     hidesTabTouch: PropTypes.bool,
-    allowFontScaling: PropTypes.bool
+    allowFontScaling: PropTypes.bool,
+    selected: PropTypes.bool,
+    // tabBarBackgroundColor: PropTypes.bool,
+
   };
 
   constructor(props, context) {
@@ -27,7 +30,7 @@ export default class Tab extends React.Component {
   }
 
   render() {
-    let { title, badge } = this.props;
+    let { title, badge, selected } = this.props;
     let icon = React.Children.only(this.props.children);
 
     if (title) {
@@ -47,11 +50,12 @@ export default class Tab extends React.Component {
     }
 
     let tabStyle = [styles.container, title ? null : styles.untitledContainer];
+    let tabBackgroundStyle = [selected ? {backgroundColor: '#2ecc71'} : null];
     return (
       <TouchableOpacity
         activeOpacity={this.props.hidesTabTouch ? 1.0 : 0.8}
         onPress={this._handlePress}
-        style={tabStyle}>
+        style={[tabBackgroundStyle, tabStyle]}>
         <View>
           {icon}
           {badge}
@@ -79,6 +83,9 @@ let styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-end',
     alignItems: 'center',
+  },
+  selectedBackground: {
+    backgroundColor: 'black',
   },
   untitledContainer: {
     paddingBottom: 13,
